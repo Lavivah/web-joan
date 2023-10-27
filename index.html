@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local Storage</title>
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background-color: #ffffe0; /* Light pink background */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center alignment */
+      justify-content: flex-start; /* Align to the top */
+      height: 100vh;
+    }
+
+    nav {
+      background-color: #pink;
+      padding: 15px 0;
+      width: 100%;
+      text-align: center;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #pink;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content button {
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      background-color: #pink;
+      text-align: left;
+      margin: 5px 0;
+    }
+
+    .dropdown-content button:hover {
+      background-color: #pink;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+      border: 1px solid #ffcccc; /* Light pink border */
+    }
+
+    th, td {
+      border: 1px solid #ffcccc; /* Light pink border */
+      text-align: left;
+      padding: 12px;
+    }
+
+    th {
+      background-color: #ffcccc; /* Light pink header */
+    }
+
+    #visitCount {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+  <script type="text/javascript">
+    const localStorage = window.localStorage;
+
+    const initialize = () => {
+      if (localStorage) {
+        const count = localStorage.getItem("visitCount") || 0;
+        const newCount = parseInt(count) + 1;
+        localStorage.setItem("visitCount", newCount);
+      }
+      updateDOM();
+    };
+
+    const updateDOM = () => {
+      const count = localStorage.getItem("visitCount") || 0;
+      const storedPreferences = localStorage.getItem("preference");
+      const preference = storedPreferences
+        ? JSON.parse(storedPreferences)
+        : {};
+      document.getElementById("visitCount").innerHTML = `Visit count ${count}`;
+      document.body.style.background = preference.color || "white";
+      showAllStoredKeyValues();
+    };
+
+    const setColorPreference = color => {
+      const preference = { color }
+      localStorage.setItem("preference", JSON.stringify(preference));
+      updateDOM();
+    };
+
+    const removeCount = () => {
+      localStorage.removeItem("visitCount");
+      updateDOM();
+    };
+
+    const clearAll = () => {
+      localStorage.clear();
+      updateDOM();
+    };
+
+    const showAllStoredKeyValues = () => {
+      console.log(`we have ${localStorage.length} values`);
+      const table = document.getElementById("storedItems");
+      table.innerHTML = "";
+
+      const headerRow = table.insertRow(0);
+      const headerCell1 = headerRow.insertCell(0);
+      const headerCell2 = headerRow.insertCell(1);
+      const headerCell3 = headerRow.insertCell(2);
+      headerCell1.innerHTML = "<b>Passport Picture</b>";
+      headerCell2.innerHTML = "<b>Name</b>";
+      headerCell3.innerHTML = "<b>Registration Number</b>";
+
+      for (let index = 0; index < localStorage.length; index++) {
+        const key = localStorage.key(index);
+        const value = localStorage.getItem(key);
+
+        const row = table.insertRow(index + 1);
+
+        const cell1 = row.insertCell(0);
+        const cell2 = row.insertCell(1);
+        const cell3 = row.insertCell(2);
+
+        cell1.innerHTML = "<img src='joan.jpg' alt='Passport Picture' width='175' height='150'>";
+        cell2.innerHTML = "JOAN KIMANI";
+        cell3.innerHTML = "SCT222-0214/2021";
+      }
+    };
+  </script>
+</head>
+<body onload="initialize()">
+  <nav>
+    <div class="dropdown">
+      <button class="dropbtn">Colors</button>
+      <div class="dropdown-content">
+        <button type="button" onclick="setColorPreference('red')">Red</button>
+        <button type="button" onclick="setColorPreference('green')">Green</button>
+        <button type="button" onclick="setColorPreference('blue')">Blue</button>
+      </div>
+    </div>
+    <button type="button" onclick="removeCount()">Remove count</button>
+    <button type="button" onclick="clearAll()">Clear all</button>
+  </nav>
+
+  <div id="visitCount"></div>
+
+  <table id="storedItems"></table>
+</body>
+
+</html>
