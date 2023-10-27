@@ -8,18 +8,18 @@
   <style>
     body {
       font-family: 'Georgia', serif;
-      background-color: #pink; /
+      background-color: #ffc0cb; /* Use a valid color code for pink */
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
-      align-items: center; 
-      justify-content: flex-start; 
+      align-items: center;
+      justify-content: flex-start;
       height: 100vh;
     }
 
     nav {
-      background-color: #pink;
+      background-color: #ffc0cb; /* Use a valid color code for pink */
       padding: 15px 0;
       width: 100%;
       text-align: center;
@@ -30,10 +30,19 @@
       display: inline-block;
     }
 
+    .dropbtn {
+      background-color: #ffc0cb; /* Use a valid color code for pink */
+      color: white;
+      padding: 15px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+
     .dropdown-content {
       display: none;
       position: absolute;
-      background-color: #pink;
+      background-color: #ffc0cb; /* Use a valid color code for pink */
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
       z-index: 1;
     }
@@ -46,13 +55,13 @@
       cursor: pointer;
       display: block;
       width: 100%;
-      background-color: #pink;
+      background-color: #ffc0cb; /* Use a valid color code for pink */
       text-align: left;
       margin: 5px 0;
     }
 
     .dropdown-content button:hover {
-      background-color: #pink;
+      background-color: #ffc0cb; /* Use a valid color code for pink */
     }
 
     .dropdown:hover .dropdown-content {
@@ -150,6 +159,7 @@
     };
   </script>
 </head>
+
 <body onload="initialize()">
   <nav>
     <div class="dropdown">
